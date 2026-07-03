@@ -1,0 +1,237 @@
+import { useEffect, useState } from "react";
+import "./App.css";
+
+const logoMain =
+  "https://www.figma.com/api/mcp/asset/2a9402fb-cba3-4f51-bb2e-2e0e7cfce526";
+const heroBg =
+  "https://www.figma.com/api/mcp/asset/beb0cfc9-b732-4b7d-895a-d284b6354b1e";
+const heroBadge =
+  "https://www.figma.com/api/mcp/asset/eac8d88b-eedf-4488-beaa-d5af91805900";
+const logoSecondary =
+  "https://www.figma.com/api/mcp/asset/4408a0f2-e727-4749-a167-c5788f560dc7";
+const phoneMockup =
+  "https://www.figma.com/api/mcp/asset/ef6144d3-4aa2-43ed-9732-59c4aaddc205";
+const tiltedCardTop =
+  "https://www.figma.com/api/mcp/asset/948bbf51-1bc8-42c1-b619-707f9c8dd7a9";
+const tiltedCardBottom =
+  "https://www.figma.com/api/mcp/asset/c0db9702-05ff-4433-ac4c-e7ddea590860";
+const protectedMockup = "/div.png";
+
+const features = [
+  {
+    icon: "🔍",
+    title: "자동 계정 탐지",
+    description: "계정 보안 메일 분석으로 연결된 서비스를 자동으로 찾아요",
+  },
+  {
+    icon: "⚠️",
+    title: "보안 위험 알림",
+    description: "오래되거나 취약한 계정을 미리 알려드려요",
+  },
+  {
+    icon: "🧹",
+    title: "원클릭 정리",
+    description: "안 쓰는 계정을 한 번에 모아 확인해요",
+  },
+];
+
+function App() {
+  const [isPromoVisible, setIsPromoVisible] = useState(true);
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+
+  useEffect(() => {
+    const timerId = window.setTimeout(() => {
+      setIsPromoVisible(false);
+    }, 5000);
+
+    return () => window.clearTimeout(timerId);
+  }, []);
+
+  useEffect(() => {
+    if (!isApplyModalOpen) {
+      return;
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsApplyModalOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [isApplyModalOpen]);
+
+  return (
+    <div className="landing-shell">
+      <div
+        className={`promo-modal ${isPromoVisible ? "is-visible" : "is-hidden"}`}
+        role="status"
+        aria-live="polite"
+      >
+        100명 한정 선착순 초기 베타 모집
+      </div>
+
+      <header className="topbar">
+        <img src={logoMain} alt="IDly" className="logo" />
+        <button
+          type="button"
+          className="pill-button small"
+          onClick={() => setIsApplyModalOpen(true)}
+        >
+          베타 신청
+        </button>
+      </header>
+
+      <section className="hero">
+        <img className="hero-grid" src={heroBg} alt="" />
+        <img className="hero-badge" src={heroBadge} alt="" />
+
+        <div className="hero-headline">
+          <div className="hero-chip-spacer" aria-hidden="true" />
+          <img src={logoSecondary} alt="IDly 로고" className="hero-logo" />
+          <p>Gmail 하나로 찾는 나의 모든 계정</p>
+        </div>
+
+        <img src={phoneMockup} alt="IDly 앱 미리보기" className="hero-phone" />
+        <span className="hero-ring" aria-hidden="true" />
+      </section>
+
+      <section className="service">
+        <p className="section-kicker">OUR SERVICE</p>
+        <h2>
+          IDly와 함께 흩어진
+          <br />내 계정을 정리해볼까요?
+        </h2>
+        <p className="section-copy">
+          Gmail 연동만으로 수신된 계정 보안 메일을 분석해
+          <br />
+          연결된 서비스와 계정을 자동으로 찾아드려요
+        </p>
+        <button
+          type="button"
+          className="pill-button"
+          onClick={() => setIsApplyModalOpen(true)}
+        >
+          베타 테스터 신청하기
+        </button>
+
+        <div className="service-cards" aria-hidden="true">
+          <img src={logoSecondary} alt="" className="floating-logo" />
+          <img src={tiltedCardTop} alt="" className="card card-top" />
+          <img src={tiltedCardBottom} alt="" className="card card-bottom" />
+        </div>
+      </section>
+
+      <section className="protected">
+        <p className="section-kicker">STAY PROTECTED</p>
+        <h2>
+          지나치기 쉬운 보안 메일,
+          <br />
+          IDly가 먼저 확인해요
+        </h2>
+        <p className="section-copy dim">
+          쌓여있는 메일함 속 낯선 기기 로그인, 비밀번호 재설정 요청처럼
+          <br />
+          눈에 띄지 않는 보안 경고를 자동으로 찾아 알려드려요
+        </p>
+        <img
+          src={protectedMockup}
+          alt="보안 알림 예시"
+          className="protected-image"
+        />
+      </section>
+
+      <section className="features">
+        <p className="section-kicker">CORE FEATURES</p>
+        <h2>핵심 기능</h2>
+
+        <ul className="feature-list">
+          {features.map((feature) => (
+            <li key={feature.title}>
+              <div className="icon-box">{feature.icon}</div>
+              <div>
+                <p className="feature-title">{feature.title}</p>
+                <p className="feature-description">{feature.description}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="cta">
+        <p className="section-kicker cta-kicker">
+          100명 한정 선착순 초기 베타 모집
+        </p>
+        <h2>
+          지금 베타 테스터로
+          <br />
+          먼저 만나보세요
+        </h2>
+        <p className="cta-copy">Gmail 계정으로 30초 만에 신청할 수 있어요</p>
+
+        <form className="cta-form">
+          <label>
+            <span className="sr-only">이메일</span>
+            <input type="email" placeholder="이메일 주소를 입력하세요" />
+          </label>
+          <label>
+            <span className="sr-only">전화번호</span>
+            <input type="tel" placeholder="전화번호를 입력하세요" />
+          </label>
+          <button type="submit" className="submit">
+            베타 테스터 신청하기
+          </button>
+        </form>
+      </section>
+
+      {isApplyModalOpen && (
+        <div
+          className="apply-modal-overlay"
+          onClick={() => setIsApplyModalOpen(false)}
+          role="presentation"
+        >
+          <div
+            className="apply-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="apply-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <img src={logoMain} alt="IDly" className="apply-modal-logo" />
+
+            <button
+              type="button"
+              className="apply-modal-close"
+              aria-label="모달 닫기"
+              onClick={() => setIsApplyModalOpen(false)}
+            >
+              ×
+            </button>
+
+            <h3 id="apply-modal-title">베타 테스터 신청</h3>
+            <p className="apply-modal-copy">
+              이메일과 전화번호를 남겨주시면
+              <br />
+              순차적으로 초대해드릴게요
+            </p>
+
+            <form className="apply-modal-form">
+              <label>
+                <span className="sr-only">이메일</span>
+                <input type="email" placeholder="이메일 주소를 입력하세요" />
+              </label>
+              <label>
+                <span className="sr-only">전화번호</span>
+                <input type="tel" placeholder="전화번호를 입력하세요" />
+              </label>
+              <button type="submit">베타 테스터 신청하기</button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default App;
