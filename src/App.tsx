@@ -100,7 +100,7 @@ function App() {
         role="status"
         aria-live="polite"
       >
-        100명 한정 선착순 초기 베타 모집
+        100명 한정 선착순 초기 베타 모집 (24시간 내 서비스 링크 전송)
       </div>
 
       <div
@@ -212,7 +212,9 @@ function App() {
           <br />
           먼저 만나보세요
         </h2>
-        <p className="cta-copy">Gmail 계정으로 30초 만에 신청할 수 있어요</p>
+        <p className="cta-copy">
+          신청 후 24시간 내에 서비스 링크를 전송해드릴게요
+        </p>
 
         <form className="cta-form" onSubmit={handleFormSubmit}>
           <label>
@@ -257,7 +259,7 @@ function App() {
             <p className="apply-modal-copy">
               이메일과 전화번호를 남겨주시면
               <br />
-              순차적으로 초대해드릴게요
+              24시간 내에 서비스 링크를 전송해드릴게요
             </p>
 
             <form className="apply-modal-form" onSubmit={handleFormSubmit}>
