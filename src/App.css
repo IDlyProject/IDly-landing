@@ -2,6 +2,7 @@
   position: relative;
   width: clamp(320px, 100vw, 520px);
   max-width: 100%;
+  padding-top: 68px;
   background: #ffffff;
   box-shadow: 0 20px 50px rgba(18, 23, 43, 0.14);
   overflow: hidden;
@@ -133,11 +134,17 @@
 }
 
 .topbar {
-  min-height: 68px;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100vw, 520px);
+  z-index: 40;
+  height: 68px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px clamp(14px, 4.8vw, 22px);
+  padding: 0 clamp(14px, 4.8vw, 22px);
   background: #ffffff;
   box-shadow: 0 2px 12px rgba(18, 23, 43, 0.08);
   gap: 12px;
@@ -241,12 +248,13 @@
 
 .hero-phone {
   position: absolute;
-  left: 20.5%;
+  left: 50%;
   top: 30%;
   width: 58.1%;
   height: auto;
   aspect-ratio: 244 / 514;
   object-fit: cover;
+  transform: translateX(-50%);
 }
 
 .hero-ring {
@@ -575,13 +583,8 @@ h2 {
 }
 
 @media (min-width: 768px) {
-  .promo-modal {
-    top: 98px;
-  }
-
-  .landing-shell {
-    border-radius: 20px;
-    margin-block: 28px;
+  .hero {
+    height: 920px;
   }
 }
 

@@ -9,8 +9,7 @@ const heroBadge =
   "https://www.figma.com/api/mcp/asset/eac8d88b-eedf-4488-beaa-d5af91805900";
 const logoSecondary =
   "https://www.figma.com/api/mcp/asset/4408a0f2-e727-4749-a167-c5788f560dc7";
-const phoneMockup =
-  "https://www.figma.com/api/mcp/asset/ef6144d3-4aa2-43ed-9732-59c4aaddc205";
+const phoneMockup = "/main.gif";
 const tiltedCardTop =
   "https://www.figma.com/api/mcp/asset/948bbf51-1bc8-42c1-b619-707f9c8dd7a9";
 const tiltedCardBottom =
