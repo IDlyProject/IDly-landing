@@ -42,6 +42,24 @@
   pointer-events: none;
 }
 
+.promo-modal.success-toast {
+  z-index: 21;
+  background: #e8f7ee;
+  color: #147a3f;
+  line-height: 1.35;
+  padding: 10px clamp(14px, 4.2vw, 20px);
+  white-space: normal;
+  box-shadow: 0 10px 24px rgba(20, 122, 63, 0.2);
+}
+
+.success-toast-subtext {
+  display: block;
+  margin-top: 3px;
+  font-size: clamp(11px, 3.2vw, 13px);
+  font-weight: 600;
+  color: #279054;
+}
+
 .apply-modal-overlay {
   position: fixed;
   inset: 0;

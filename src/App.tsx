@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
 import "./App.css";
 
 const logoMain =
@@ -37,6 +38,8 @@ const features = [
 function App() {
   const [isPromoVisible, setIsPromoVisible] = useState(true);
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [isSubmitToastVisible, setIsSubmitToastVisible] = useState(false);
+  const submitToastTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const timerId = window.setTimeout(() => {
@@ -61,6 +64,35 @@ function App() {
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isApplyModalOpen]);
 
+  useEffect(() => {
+    return () => {
+      if (submitToastTimerRef.current !== null) {
+        window.clearTimeout(submitToastTimerRef.current);
+      }
+    };
+  }, []);
+
+  const showSubmitToast = () => {
+    setIsPromoVisible(false);
+    setIsSubmitToastVisible(true);
+
+    if (submitToastTimerRef.current !== null) {
+      window.clearTimeout(submitToastTimerRef.current);
+    }
+
+    submitToastTimerRef.current = window.setTimeout(() => {
+      setIsSubmitToastVisible(false);
+      submitToastTimerRef.current = null;
+    }, 3000);
+  };
+
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setIsApplyModalOpen(false);
+    showSubmitToast();
+  };
+
   return (
     <div className="landing-shell">
       <div
@@ -71,6 +103,19 @@ function App() {
         100명 한정 선착순 초기 베타 모집
       </div>
 
+      <div
+        className={`promo-modal success-toast ${
+          isSubmitToastVisible ? "is-visible" : "is-hidden"
+        }`}
+        role="status"
+        aria-live="polite"
+      >
+        신청이 완료되었습니다
+        <span className="success-toast-subtext">
+          24시간 이내 서비스 링크를 보내드릴게요
+        </span>
+      </div>
+
       <header className="topbar">
         <img src={logoMain} alt="IDly" className="logo" />
         <button
@@ -78,7 +123,7 @@ function App() {
           className="pill-button small"
           onClick={() => setIsApplyModalOpen(true)}
         >
-          베타 신청
+          베타 테스터 신청
         </button>
       </header>
 
@@ -169,7 +214,7 @@ function App() {
         </h2>
         <p className="cta-copy">Gmail 계정으로 30초 만에 신청할 수 있어요</p>
 
-        <form className="cta-form">
+        <form className="cta-form" onSubmit={handleFormSubmit}>
           <label>
             <span className="sr-only">이메일</span>
             <input type="email" placeholder="이메일 주소를 입력하세요" />
@@ -215,7 +260,7 @@ function App() {
               순차적으로 초대해드릴게요
             </p>
 
-            <form className="apply-modal-form">
+            <form className="apply-modal-form" onSubmit={handleFormSubmit}>
               <label>
                 <span className="sr-only">이메일</span>
                 <input type="email" placeholder="이메일 주소를 입력하세요" />
