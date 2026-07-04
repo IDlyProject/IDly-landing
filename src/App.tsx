@@ -86,8 +86,22 @@ function App() {
     }, 3000);
   };
 
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = event.currentTarget;
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const phone = (form.elements.namedItem("phone") as HTMLInputElement).value;
+
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL ?? ""}/api/beta`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, phone }),
+      });
+    } catch {
+      // 네트워크 오류 시에도 UX는 그대로 유지
+    }
+
     window.scrollTo({ top: 0, behavior: "smooth" });
     setIsApplyModalOpen(false);
     showSubmitToast();
@@ -219,11 +233,11 @@ function App() {
         <form className="cta-form" onSubmit={handleFormSubmit}>
           <label>
             <span className="sr-only">이메일</span>
-            <input type="email" placeholder="이메일 주소를 입력하세요" />
+            <input name="email" type="email" placeholder="이메일 주소를 입력하세요" required />
           </label>
           <label>
             <span className="sr-only">전화번호</span>
-            <input type="tel" placeholder="전화번호를 입력하세요" />
+            <input name="phone" type="tel" placeholder="전화번호를 입력하세요" required />
           </label>
           <button type="submit" className="submit">
             베타 테스터 신청하기
@@ -265,11 +279,11 @@ function App() {
             <form className="apply-modal-form" onSubmit={handleFormSubmit}>
               <label>
                 <span className="sr-only">이메일</span>
-                <input type="email" placeholder="이메일 주소를 입력하세요" />
+                <input name="email" type="email" placeholder="이메일 주소를 입력하세요" required />
               </label>
               <label>
                 <span className="sr-only">전화번호</span>
-                <input type="tel" placeholder="전화번호를 입력하세요" />
+                <input name="phone" type="tel" placeholder="전화번호를 입력하세요" required />
               </label>
               <button type="submit">베타 테스터 신청하기</button>
             </form>
