@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import "./App.css";
 
+type Locale = "ko" | "en";
+
 const logoMain =
   "https://www.figma.com/api/mcp/asset/2a9402fb-cba3-4f51-bb2e-2e0e7cfce526";
 const heroBg =
@@ -17,7 +19,7 @@ const tiltedCardBottom =
   "https://www.figma.com/api/mcp/asset/c0db9702-05ff-4433-ac4c-e7ddea590860";
 const protectedMockup = "/div.png";
 
-const features = [
+const featuresKo = [
   {
     icon: "🔍",
     title: "자동 계정 탐지",
@@ -35,11 +37,83 @@ const features = [
   },
 ];
 
+const featuresEn = [
+  {
+    icon: "🔍",
+    title: "Automatic Account Discovery",
+    description:
+      "We analyze account security emails to find linked services automatically.",
+  },
+  {
+    icon: "⚠️",
+    title: "Security Risk Alerts",
+    description:
+      "Get proactive warnings for old, inactive, or vulnerable accounts.",
+  },
+  {
+    icon: "🧹",
+    title: "One-Click Cleanup",
+    description:
+      "Review and organize unused accounts in one place with a single flow.",
+  },
+];
+
+async function detectCountryCode(): Promise<string | null> {
+  try {
+    const response = await fetch("https://ipapi.co/json/");
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = (await response.json()) as { country_code?: string };
+    return data.country_code?.toUpperCase() ?? null;
+  } catch {
+    return null;
+  }
+}
+
 function App() {
+  const [locale, setLocale] = useState<Locale>(
+    window.location.pathname.startsWith("/eng") ? "en" : "ko",
+  );
   const [isPromoVisible, setIsPromoVisible] = useState(true);
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [isSubmitToastVisible, setIsSubmitToastVisible] = useState(false);
   const submitToastTimerRef = useRef<number | null>(null);
+  const isEnglish = locale === "en";
+  const features = isEnglish ? featuresEn : featuresKo;
+
+  useEffect(() => {
+    let isCancelled = false;
+    const isEnglishPath = window.location.pathname.startsWith("/eng");
+
+    if (isEnglishPath) {
+      setLocale("en");
+      document.documentElement.lang = "en";
+      return;
+    }
+
+    setLocale("ko");
+    document.documentElement.lang = "ko";
+
+    const redirectIfNonKoreanVisitor = async () => {
+      const countryCode = await detectCountryCode();
+
+      if (isCancelled || !countryCode || countryCode === "KR") {
+        return;
+      }
+
+      window.history.replaceState({}, "", "/eng");
+      setLocale("en");
+      document.documentElement.lang = "en";
+    };
+
+    void redirectIfNonKoreanVisitor();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     const timerId = window.setTimeout(() => {
@@ -114,7 +188,9 @@ function App() {
         role="status"
         aria-live="polite"
       >
-        100명 한정 선착순 초기 베타 모집
+        {isEnglish
+          ? "Early beta open for the first 100 applicants"
+          : "100명 한정 선착순 초기 베타 모집"}
       </div>
 
       <div
@@ -124,9 +200,13 @@ function App() {
         role="status"
         aria-live="polite"
       >
-        신청이 완료되었습니다
+        {isEnglish
+          ? "Your application has been submitted"
+          : "신청이 완료되었습니다"}
         <span className="success-toast-subtext">
-          입력하신 연락처로 서비스 링크를 보내드릴게요
+          {isEnglish
+            ? "We will send the service link to your contact details soon."
+            : "입력하신 연락처로 서비스 링크를 보내드릴게요"}
         </span>
       </div>
 
@@ -137,7 +217,7 @@ function App() {
           className="pill-button small"
           onClick={() => setIsApplyModalOpen(true)}
         >
-          베타 테스터 신청
+          {isEnglish ? "Apply for Beta" : "베타 테스터 신청"}
         </button>
       </header>
 
@@ -148,7 +228,11 @@ function App() {
         <div className="hero-headline">
           <div className="hero-chip-spacer" aria-hidden="true" />
           <img src={logoSecondary} alt="IDly 로고" className="hero-logo" />
-          <p>Gmail 하나로 찾는 나의 모든 계정</p>
+          <p>
+            {isEnglish
+              ? "Find every account connected to your Gmail"
+              : "Gmail 하나로 찾는 나의 모든 계정"}
+          </p>
         </div>
 
         <img src={phoneMockup} alt="IDly 앱 미리보기" className="hero-phone" />
@@ -157,21 +241,45 @@ function App() {
 
       <section className="service">
         <p className="section-kicker">OUR SERVICE</p>
-        <h2>
-          IDly와 함께 흩어진
-          <br />내 계정을 정리해볼까요?
+        <h2
+          className={
+            isEnglish ? "service-title service-title-en" : "service-title"
+          }
+        >
+          {isEnglish ? (
+            <>
+              Ready to organize your scattered
+              <br /> online accounts with IDly?
+            </>
+          ) : (
+            <>
+              IDly와 함께 흩어진
+              <br />내 계정을 정리해볼까요?
+            </>
+          )}
         </h2>
         <p className="section-copy">
-          Gmail 연동만으로 수신된 계정 보안 메일을 분석해
-          <br />
-          연결된 서비스와 계정을 자동으로 찾아드려요
+          {isEnglish ? (
+            <>
+              By connecting just your Gmail, IDly analyzes account security
+              emails
+              <br />
+              and finds your linked services and accounts automatically.
+            </>
+          ) : (
+            <>
+              Gmail 연동만으로 수신된 계정 보안 메일을 분석해
+              <br />
+              연결된 서비스와 계정을 자동으로 찾아드려요
+            </>
+          )}
         </p>
         <button
           type="button"
           className="pill-button"
           onClick={() => setIsApplyModalOpen(true)}
         >
-          베타 테스터 신청하기
+          {isEnglish ? "Apply for Beta" : "베타 테스터 신청하기"}
         </button>
 
         <div className="service-cards" aria-hidden="true">
@@ -184,25 +292,46 @@ function App() {
       <section className="protected">
         <p className="section-kicker">STAY PROTECTED</p>
         <h2>
-          지나치기 쉬운 보안 메일,
-          <br />
-          IDly가 먼저 확인해요
+          {isEnglish ? (
+            <>
+              Easy-to-miss security emails,
+              <br />
+              checked first by IDly
+            </>
+          ) : (
+            <>
+              지나치기 쉬운 보안 메일,
+              <br />
+              IDly가 먼저 확인해요
+            </>
+          )}
         </h2>
         <p className="section-copy dim">
-          쌓여있는 메일함 속 낯선 기기 로그인, 비밀번호 재설정 요청처럼
-          <br />
-          눈에 띄지 않는 보안 경고를 자동으로 찾아 알려드려요
+          {isEnglish ? (
+            <>
+              In a crowded inbox, we surface hidden alerts like unknown device
+              logins
+              <br />
+              and password reset requests before you miss them.
+            </>
+          ) : (
+            <>
+              쌓여있는 메일함 속 낯선 기기 로그인, 비밀번호 재설정 요청처럼
+              <br />
+              눈에 띄지 않는 보안 경고를 자동으로 찾아 알려드려요
+            </>
+          )}
         </p>
         <img
           src={protectedMockup}
-          alt="보안 알림 예시"
+          alt={isEnglish ? "Security alert example" : "보안 알림 예시"}
           className="protected-image"
         />
       </section>
 
       <section className="features">
         <p className="section-kicker">CORE FEATURES</p>
-        <h2>핵심 기능</h2>
+        <h2>{isEnglish ? "Core Features" : "핵심 기능"}</h2>
 
         <ul className="feature-list">
           {features.map((feature) => (
@@ -219,38 +348,58 @@ function App() {
 
       <section className="cta">
         <p className="section-kicker cta-kicker">
-          100명 한정 선착순 초기 베타 모집
+          {isEnglish
+            ? "Early beta open for the first 100 applicants"
+            : "100명 한정 선착순 초기 베타 모집"}
         </p>
         <h2>
-          지금 베타 테스터로
-          <br />
-          먼저 만나보세요
+          {isEnglish ? (
+            <>
+              Join as a beta tester today
+              <br />
+              and get early access
+            </>
+          ) : (
+            <>
+              지금 베타 테스터로
+              <br />
+              먼저 만나보세요
+            </>
+          )}
         </h2>
         <p className="cta-copy">
-          신청 내용을 확인한 뒤 서비스 링크를 보내드릴게요
+          {isEnglish
+            ? "After reviewing your application, we will send your service link."
+            : "신청 내용을 확인한 뒤 서비스 링크를 보내드릴게요"}
         </p>
 
         <form className="cta-form" onSubmit={handleFormSubmit}>
           <label>
-            <span className="sr-only">이메일</span>
+            <span className="sr-only">{isEnglish ? "Email" : "이메일"}</span>
             <input
               name="email"
               type="email"
-              placeholder="이메일 주소를 입력하세요"
+              placeholder={
+                isEnglish
+                  ? "Enter your email address"
+                  : "이메일 주소를 입력하세요"
+              }
               required
             />
           </label>
           <label>
-            <span className="sr-only">전화번호</span>
+            <span className="sr-only">{isEnglish ? "Phone" : "전화번호"}</span>
             <input
               name="phone"
               type="tel"
-              placeholder="전화번호를 입력하세요"
+              placeholder={
+                isEnglish ? "Enter your phone number" : "전화번호를 입력하세요"
+              }
               required
             />
           </label>
           <button type="submit" className="submit">
-            베타 테스터 신청하기
+            {isEnglish ? "Apply for Beta" : "베타 테스터 신청하기"}
           </button>
         </form>
       </section>
@@ -273,39 +422,65 @@ function App() {
             <button
               type="button"
               className="apply-modal-close"
-              aria-label="모달 닫기"
+              aria-label={isEnglish ? "Close modal" : "모달 닫기"}
               onClick={() => setIsApplyModalOpen(false)}
             >
               ×
             </button>
 
-            <h3 id="apply-modal-title">베타 테스터 신청</h3>
+            <h3 id="apply-modal-title">
+              {isEnglish ? "Apply for Beta" : "베타 테스터 신청"}
+            </h3>
             <p className="apply-modal-copy">
-              이메일과 전화번호를 남겨주시면
-              <br />
-              서비스 링크를 보내드릴게요
+              {isEnglish ? (
+                <>
+                  Leave your email and phone number,
+                  <br />
+                  and we will send you the service link.
+                </>
+              ) : (
+                <>
+                  이메일과 전화번호를 남겨주시면
+                  <br />
+                  서비스 링크를 보내드릴게요
+                </>
+              )}
             </p>
 
             <form className="apply-modal-form" onSubmit={handleFormSubmit}>
               <label>
-                <span className="sr-only">이메일</span>
+                <span className="sr-only">
+                  {isEnglish ? "Email" : "이메일"}
+                </span>
                 <input
                   name="email"
                   type="email"
-                  placeholder="이메일 주소를 입력하세요"
+                  placeholder={
+                    isEnglish
+                      ? "Enter your email address"
+                      : "이메일 주소를 입력하세요"
+                  }
                   required
                 />
               </label>
               <label>
-                <span className="sr-only">전화번호</span>
+                <span className="sr-only">
+                  {isEnglish ? "Phone" : "전화번호"}
+                </span>
                 <input
                   name="phone"
                   type="tel"
-                  placeholder="전화번호를 입력하세요"
+                  placeholder={
+                    isEnglish
+                      ? "Enter your phone number"
+                      : "전화번호를 입력하세요"
+                  }
                   required
                 />
               </label>
-              <button type="submit">베타 테스터 신청하기</button>
+              <button type="submit">
+                {isEnglish ? "Apply for Beta" : "베타 테스터 신청하기"}
+              </button>
             </form>
           </div>
         </div>
@@ -317,7 +492,11 @@ function App() {
         </div>
 
         <address className="footer-company" aria-label="회사 정보">
-          <p>아이들리 | Founder: 이현진</p>
+          <p>
+            {isEnglish
+              ? "IDly | Founder: Helia Hyunjin Lee"
+              : "아이들리 | Founder: 이현진"}
+          </p>
           <p>
             Contact:{" "}
             <a
@@ -325,13 +504,17 @@ function App() {
               target="_blank"
               rel="noreferrer"
             >
-              LinkedIn (대표자)
+              {isEnglish ? "LinkedIn (Founder)" : "LinkedIn (대표자)"}
             </a>
             {" | idly1apt@gmail.com"}
           </p>
         </address>
 
-        <p className="footer-copy">© 2026 계정아파트. All rights reserved.</p>
+        <p className="footer-copy">
+          {isEnglish
+            ? "© 2026 계정아파트. All rights reserved."
+            : "© 2026 계정아파트. All rights reserved."}
+        </p>
       </footer>
     </div>
   );
