@@ -114,7 +114,7 @@ function App() {
         role="status"
         aria-live="polite"
       >
-        100명 한정 선착순 초기 베타 모집 (24시간 내 서비스 링크 전송)
+        100명 한정 선착순 초기 베타 모집
       </div>
 
       <div
@@ -126,7 +126,7 @@ function App() {
       >
         신청이 완료되었습니다
         <span className="success-toast-subtext">
-          24시간 이내 서비스 링크를 보내드릴게요
+          입력하신 연락처로 서비스 링크를 보내드릴게요
         </span>
       </div>
 
@@ -227,17 +227,27 @@ function App() {
           먼저 만나보세요
         </h2>
         <p className="cta-copy">
-          신청 후 24시간 내에 서비스 링크를 전송해드릴게요
+          신청 내용을 확인한 뒤 서비스 링크를 보내드릴게요
         </p>
 
         <form className="cta-form" onSubmit={handleFormSubmit}>
           <label>
             <span className="sr-only">이메일</span>
-            <input name="email" type="email" placeholder="이메일 주소를 입력하세요" required />
+            <input
+              name="email"
+              type="email"
+              placeholder="이메일 주소를 입력하세요"
+              required
+            />
           </label>
           <label>
             <span className="sr-only">전화번호</span>
-            <input name="phone" type="tel" placeholder="전화번호를 입력하세요" required />
+            <input
+              name="phone"
+              type="tel"
+              placeholder="전화번호를 입력하세요"
+              required
+            />
           </label>
           <button type="submit" className="submit">
             베타 테스터 신청하기
@@ -273,23 +283,56 @@ function App() {
             <p className="apply-modal-copy">
               이메일과 전화번호를 남겨주시면
               <br />
-              24시간 내에 서비스 링크를 전송해드릴게요
+              서비스 링크를 보내드릴게요
             </p>
 
             <form className="apply-modal-form" onSubmit={handleFormSubmit}>
               <label>
                 <span className="sr-only">이메일</span>
-                <input name="email" type="email" placeholder="이메일 주소를 입력하세요" required />
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="이메일 주소를 입력하세요"
+                  required
+                />
               </label>
               <label>
                 <span className="sr-only">전화번호</span>
-                <input name="phone" type="tel" placeholder="전화번호를 입력하세요" required />
+                <input
+                  name="phone"
+                  type="tel"
+                  placeholder="전화번호를 입력하세요"
+                  required
+                />
               </label>
               <button type="submit">베타 테스터 신청하기</button>
             </form>
           </div>
         </div>
       )}
+
+      <footer className="landing-footer">
+        <div className="footer-brand-row">
+          <img src={logoMain} alt="IDly" className="footer-logo" />
+        </div>
+
+        <address className="footer-company" aria-label="회사 정보">
+          <p>아이들리 | Founder: 이현진</p>
+          <p>
+            Contact:{" "}
+            <a
+              href="https://www.linkedin.com/in/%EC%9D%B4%ED%98%84%EC%A7%84-%E2%80%8E-188b73386/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn (대표자)
+            </a>
+            {" | idly1apt@gmail.com"}
+          </p>
+        </address>
+
+        <p className="footer-copy">© 2026 계정아파트. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
