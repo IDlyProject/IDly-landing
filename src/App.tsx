@@ -4,20 +4,13 @@ import "./App.css";
 
 type Locale = "ko" | "en";
 
-const logoMain =
-  "https://www.figma.com/api/mcp/asset/2a9402fb-cba3-4f51-bb2e-2e0e7cfce526";
-const heroBg =
-  "https://www.figma.com/api/mcp/asset/beb0cfc9-b732-4b7d-895a-d284b6354b1e";
-const heroBadge =
-  "https://www.figma.com/api/mcp/asset/eac8d88b-eedf-4488-beaa-d5af91805900";
-const logoSecondary =
-  "https://www.figma.com/api/mcp/asset/4408a0f2-e727-4749-a167-c5788f560dc7";
+const logoMain = "/logomain.png";
+const heroBadge = "/circle.png";
+const logoSecondary = "/typoblue.png";
 const phoneMockup = "/main.gif";
-const tiltedCardTop =
-  "https://www.figma.com/api/mcp/asset/948bbf51-1bc8-42c1-b619-707f9c8dd7a9";
-const tiltedCardBottom =
-  "https://www.figma.com/api/mcp/asset/c0db9702-05ff-4433-ac4c-e7ddea590860";
-const protectedMockup = "/div.png";
+const tiltedCardTop = "/sec2_r.png";
+const tiltedCardBottom = "/sec2_l.png";
+const protectedMockup = "/sec3.png";
 
 const featuresKo = [
   {
@@ -222,7 +215,6 @@ function App() {
       </header>
 
       <section className="hero">
-        <img className="hero-grid" src={heroBg} alt="" />
         <img className="hero-badge" src={heroBadge} alt="" />
 
         <div className="hero-headline">

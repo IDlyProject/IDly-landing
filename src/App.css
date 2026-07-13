@@ -169,9 +169,12 @@
 }
 
 .logo {
-  width: 43.58px;
+  width: auto;
+  max-width: 160px;
   height: 34px;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: left center;
+  display: block;
 }
 
 .pill-button {
@@ -200,6 +203,7 @@
   position: relative;
   height: clamp(680px, 182vw, 860px);
   overflow: hidden;
+  background: #eef2fa;
 }
 
 .hero-grid {
@@ -514,16 +518,20 @@ h2 {
 }
 
 .footer-brand-row {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: flex-start;
+  width: 100%;
   line-height: 1;
 }
 
 .footer-logo {
   display: block;
-  width: 34px;
+  width: auto;
+  max-width: 128px;
   height: 26px;
   object-fit: contain;
+  object-position: left center;
 }
 
 .footer-links {
