@@ -535,21 +535,24 @@ h2 {
 }
 
 .footer-links {
-  margin-top: 16px;
+  margin-top: 4px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 14px;
+  gap: 0;
 }
 
 .footer-links a {
-  color: #4f5e7b;
-  font-size: 12.5px;
-  line-height: 1.3;
+  color: #7a8498;
+  font-size: 11.5px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
   text-decoration: none;
+  font-weight: 400;
 }
 
-.footer-links a:nth-child(2) {
-  font-weight: 700;
+.footer-links a + a::before {
+  content: " | ";
+  color: #7a8498;
 }
 
 .footer-company {
@@ -789,8 +792,3 @@ h2 {
   color: #1a2b55;
 }
 
-.legal-shell .footer-links a,
-.legal-shell .footer-links a:nth-child(2) {
-  font-weight: 400;
-  font-size: 11.5px;
-}
