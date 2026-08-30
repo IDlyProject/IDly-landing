@@ -692,16 +692,35 @@ h2 {
 }
 
 /* ── Legal pages (Privacy / Terms) ── */
+.legal-shell {
+  position: relative;
+  width: clamp(320px, 100vw, 520px);
+  max-width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgba(18, 23, 43, 0.14);
+}
+
+@media (max-width: 520px) {
+  .legal-shell {
+    box-shadow: none;
+  }
+}
+
 .legal-header {
   position: sticky;
   top: 0;
   z-index: 40;
   background: #ffffff;
   border-bottom: 1px solid #e6ebf6;
-  padding: 0 clamp(20px, 6vw, 48px);
-  height: 64px;
+  padding: 0 clamp(14px, 4.8vw, 22px);
+  height: 68px;
   display: flex;
   align-items: center;
+  box-shadow: 0 2px 12px rgba(18, 23, 43, 0.08);
 }
 
 .legal-header a {
@@ -709,19 +728,9 @@ h2 {
   align-items: center;
 }
 
-.legal-shell {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-}
-
 .legal-content {
   flex: 1;
-  max-width: 720px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 48px clamp(20px, 6vw, 48px) 80px;
+  padding: 32px clamp(18px, 6.7vw, 32px) 80px;
 }
 
 .legal-content h1 {
