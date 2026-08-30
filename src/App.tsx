@@ -502,6 +502,13 @@ function App() {
           </p>
         </address>
 
+        <nav className="footer-links" aria-label="법적 문서">
+          <a href="/privacy">
+            {isEnglish ? "Privacy Policy" : "개인정보처리방침"}
+          </a>
+          <a href="/terms">{isEnglish ? "Terms of Service" : "이용약관"}</a>
+        </nav>
+
         <p className="footer-copy">
           {isEnglish
             ? "© 2026 계정아파트. All rights reserved."
