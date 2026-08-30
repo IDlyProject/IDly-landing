@@ -692,6 +692,23 @@ h2 {
 }
 
 /* ── Legal pages (Privacy / Terms) ── */
+.legal-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: #ffffff;
+  border-bottom: 1px solid #e6ebf6;
+  padding: 0 clamp(20px, 6vw, 48px);
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.legal-header a {
+  display: flex;
+  align-items: center;
+}
+
 .legal-shell {
   min-height: 100vh;
   display: flex;
@@ -739,5 +756,26 @@ h2 {
   color: #4f5e7b;
   line-height: 1.8;
   white-space: pre-line;
-  margin: 0;
+  margin: 0 0 8px;
+}
+
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 16px;
+  font-size: 13px;
+  color: #4f5e7b;
+}
+
+.legal-table th,
+.legal-table td {
+  border: 1px solid #e6ebf6;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.legal-table th {
+  background: #f6f8fc;
+  font-weight: 600;
+  color: #1a2b55;
 }
