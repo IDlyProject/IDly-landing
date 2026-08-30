@@ -483,13 +483,6 @@ function App() {
           <img src={logoMain} alt="IDly" className="footer-logo" />
         </div>
 
-        <nav className="footer-links" aria-label="법적 문서">
-          <a href="/privacy">
-            {isEnglish ? "Privacy Policy" : "개인정보처리방침"}
-          </a>
-          <a href="/terms">{isEnglish ? "Terms of Service" : "이용약관"}</a>
-        </nav>
-
         <address className="footer-company" aria-label="회사 정보">
           <p>
             {isEnglish
