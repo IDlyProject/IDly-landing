@@ -79,7 +79,7 @@ export default function TermsPage() {
           <p>아이들리 | Founder: 이현진</p>
           <p>Contact: idly1apt@gmail.com</p>
         </address>
-        <nav className="footer-links" aria-label="법적 문서">
+        <nav className="footer-links legal-footer-links" aria-label="법적 문서">
           <a href="/privacy">개인정보처리방침</a>
           <a href="/terms">이용약관</a>
         </nav>
