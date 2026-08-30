@@ -118,7 +118,39 @@ export default function PrivacyPage() {
         </section>
 
         <section className="legal-section">
-          <h2>9. 개인정보처리방침 변경</h2>
+          <h2>9. 개인정보 보안 조치</h2>
+          <p>
+            IDly는 이용자의 개인정보를 안전하게 보호하기 위해 다음 기술적·관리적 조치를 취합니다.
+            {"\n\n"}- 모든 데이터 전송은 HTTPS(TLS)로 암호화됩니다.
+            {"\n"}- 이메일 원문은 서버에 저장되지 않으며, 분석 완료 즉시 파기합니다.
+            {"\n"}- 데이터베이스는 Supabase의 암호화 스토리지에 저장됩니다.
+            {"\n"}- Google 계정 접근은 OAuth 2.0 표준 프로토콜을 통해서만 이루어집니다.
+            {"\n"}- 서비스 접근 권한은 최소 권한 원칙에 따라 관리됩니다.
+          </p>
+        </section>
+
+        <section className="legal-section">
+          <h2>10. Google API 서비스 이용자 데이터 정책</h2>
+          <p>
+            IDly의 Google API에서 수신한 정보 사용은 Limited Use 요건을 포함한{" "}
+            <a
+              href="https://developers.google.com/terms/api-services-user-data-policy"
+              target="_blank"
+              rel="noreferrer"
+              style={{ color: "#4f5e7b" }}
+            >
+              Google API 서비스 사용자 데이터 정책
+            </a>
+            을 준수합니다.
+            {"\n\n"}구체적으로, Google API로부터 수신한 데이터는 다음 용도로만 사용됩니다.
+            {"\n"}- 이용자에게 직접 표시되는 계정 보안 분석 기능 제공
+            {"\n"}- 서비스 개선 (단, 이용자 동의가 있는 경우에 한함)
+            {"\n\n"}Google API 데이터는 광고 게재, 사용자 추적·프로파일링, 제3자 판매·임대, 신용평가 등의 목적으로 절대 사용하지 않습니다.
+          </p>
+        </section>
+
+        <section className="legal-section">
+          <h2>11. 개인정보처리방침 변경</h2>
           <p>
             이 개인정보처리방침은 2026년 8월 31일부터 적용됩니다. 내용이 변경될 경우 앱 내 공지 또는 이 페이지를 통해 안내드립니다.
           </p>
